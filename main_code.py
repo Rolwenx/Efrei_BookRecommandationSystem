@@ -12,6 +12,7 @@ def launching_menu() :
         print("You selected a nonexistent choice, choose again please.")
         launching_menu_selection = input("Enter the corresponding choice : ")
     launching_menu_selection = int(launching_menu_selection)
+    print("\n")
     if launching_menu_selection == 1 :
         reader_profiles_menu()
     elif launching_menu_selection == 2 :
@@ -31,10 +32,11 @@ def reader_profiles_menu():
     6. Return to the the launch menu""")
 
     reader_profiles_menu_selection = input("Enter the corresponding choice : ")
-    while reader_profiles_menu_selection != '1' and reader_profiles_menu_selection != '2' and reader_profiles_menu_selection != '3' and reader_profiles_menu_selection != '4':
+    while reader_profiles_menu_selection != '1' and reader_profiles_menu_selection != '2' and reader_profiles_menu_selection != '3' and reader_profiles_menu_selection != '4' and reader_profiles_menu_selection != '5' and reader_profiles_menu_selection != '6'  :
         print("You selected a nonexistent choice, choose again please.")
         reader_profiles_menu_selection = input("Enter the corresponding choice : ")
     reader_profiles_menu_selection = int(reader_profiles_menu_selection)
+    print("\n")
 
     if reader_profiles_menu_selection == 1:
         list_books()
@@ -42,6 +44,7 @@ def reader_profiles_menu():
         reader_profiles_menu()
     elif reader_profiles_menu_selection == 2:
         add_reader_profile()
+        print("\n \n")
         reader_profiles_menu()
     elif reader_profiles_menu_selection == 3:
         reader_profiles_menu()
@@ -51,7 +54,6 @@ def reader_profiles_menu():
         reader_profiles_menu()
     else :
         launching_menu()
-
 
 launching_menu()
 
