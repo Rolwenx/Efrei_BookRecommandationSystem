@@ -115,12 +115,20 @@ def delete_member() :
     print("Which member do you want to delete?")
     member_to_delete = input("Enter his pseudonym : ")
     readers_list = open("readers.txt","r")
+    booksread_list = open("booksread.txt","r")
     readers_lines = readers_list.readlines()
+    booksread_lines = booksread_list.readlines()
     readers_list.close()
+    booksread_list.close()
     new_readers_file = open("readers.txt", "w")
-    for line in readers_lines :
+    booksread_file = open("booksread.txt", "w")
+    for line in readers_lines:
         if member_to_delete not in line:
             new_readers_file.write(line)
+    for line2 in booksread_lines:
+        if member_to_delete not in line2:
+            booksread_file.write(line2)
+    booksread_file.close()
     readers_list.close()
 
 
