@@ -122,3 +122,8 @@ def wiev_a_reader(reader_to_look_for,file_readers_read):
         b=line.split(',')
         if b[0]==reader_to_look_for:
             print('the reader has registered under the pseudonym ',b[0],', he is a ',gender_reader_inverse_function(b[1]),', ',age_reader_category_inverse_function(b[2]) 'and likes to read ',reading_style_reader_inverse_function(b[3]),' books')
+
+
+#    actions = {1: lambda: (list_books(), reader_profiles_menu()), 2: lambda: (add_reader_profile(), reader_profiles_menu()), 3: reader_profiles_menu, 4: reader_profiles_menu, 5: reader_profiles_menu, 6: reader_profiles_menu}
+#    if reader_profiles_menu_selection in actions:
+#        actions[reader_profiles_menu_selection]()
