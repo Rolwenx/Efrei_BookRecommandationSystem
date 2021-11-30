@@ -1,12 +1,49 @@
 # DICTIONARIES CREATED
-reader_age_string = {1: "MAN", 2: "WOMAN", 3: "NO MATTER"}
+READER_GENDERS = {
+    1: "MAN",
+    2: "WOMAN",
+    3: "NO MATTER WHAT"
+}
 
+READER_AGES = {
+    1: "Less than 18 years old",
+    2: "Between 18 and 25 years old",
+    3: "More than 25 years old"
+}
+
+BOOK_GENRES = {
+    1: 'Sci-fi',
+    2: 'Biography',
+    3: 'Horror',
+    4: 'Romance',
+    5: 'Fable',
+    6: 'History',
+    7: 'Comedy'
+}
+
+BOOK_DEPOSITORY = {
+    1: 'Débuter la programmation Java',
+    2: 'Apprendre Python',
+    3: 'Les Citations du Président Mao Tse-Toung',
+    4: 'Don Quichotte de la Manche',
+    5: 'Un conte de deux villes',
+    6: 'Le Seigneur des Anneaux',
+    7: 'Le Petit Prince',
+    8: 'Harry Potter à l’école des sorciers',
+    9: 'Le Seigneur des Anneaux'
+}
+
+DELIMITER = ','
+LINE_BREAK = '\n\t'
+FORBIDDEN_VALUE = -1
 
 # --------------------------------- ADD READER FUNCTIONS -----------------------
 
+
 def ask_user_pseudonym():
-    pseudonym = input('What is your pseudonym ?\n> ')
+    pseudonym = input('What is your pseudonym ?\n')
     return pseudonym
+
 
 
 # function that asks the user for its gender
@@ -17,7 +54,8 @@ def ask_user_gender():
            1. MAN
            2. WOMAN 
            3. NO MATTER WHAT""")
-        gender_number = int(input("Enter the number corresponding to your gender : "))
+        gender_number = int(
+            input("Enter the number corresponding to your gender : "))
     return gender_number
 
 
@@ -34,7 +72,8 @@ def user_gender_string(gender_number):
 def ask_user_age():
     age_reader = int(input("What is your age ? \n> "))
     while age_reader < 0:
-        age_reader = int(input("What is your age ? You can't be less than 0 years old !!\n"))
+        age_reader = int(
+            input("What is your age ? You can't be less than 0 years old !!\n"))
     return age_reader
 
 
@@ -48,19 +87,9 @@ def user_age_category_number(age_reader):
         return 3
 
 
-# function that returns a string according to the number entered by the user for his aga
-def user_age_category_string(age_reader):
-    if age_reader == 1:
-        return 'Less than 18 years old'
-    elif age_reader == 2:
-        return 'Between 18 and 25 years old'
-    else:
-        return 'More than 25 years old'
-
-
 # function that ask the user his favourite book_type
 def ask_user_book_type():
-    book_type = -1
+    book_type = FORBIDDEN_VALUE
     while book_type <= 0 or book_type >= 8:
         print("""What's your reading style ?
         1. Sci-fi
@@ -74,23 +103,6 @@ def ask_user_book_type():
     return book_type
 
 
-def user_book_type_string(book_type):
-    if book_type == 1:
-        return 'Sci-fi'
-    elif book_type == 2:
-        return 'Biography'
-    elif book_type == 2:
-        return 'Horror'
-    elif book_type == 2:
-        return 'Romance'
-    elif book_type == 2:
-        return 'Fable'
-    elif book_type == 2:
-        return 'History'
-    else:
-        return 'Comedy'
-
-
 def bookread_reader_profile():
     file_books_read = open("booksread.txt", "a")
     list_of_booksread = []
@@ -99,7 +111,7 @@ def bookread_reader_profile():
     number_book_read = input("\n" + "Enter the corresponding number : ")
     list_of_booksread.append(number_book_read)
     file_books_read.write(str(number_book_read) + str(","))
-    print("""Do you still want to add another book to your "Have read" page ? (YES OR NO)""")
+    print("""Do you still want to add another book to your "Have read" page ? (YES OR NO)\n> """)
     continue_to_ask_book_read = input()
     while continue_to_ask_book_read != "Yes" and continue_to_ask_book_read != "No" and continue_to_ask_book_read != "yes" and continue_to_ask_book_read != "no":
         print("""Do you still want to add another book to your "Have read" page ? (Yes OR No)""")
@@ -116,26 +128,8 @@ def bookread_reader_profile():
         print("""Do you still want to add another book to your "Have read" page ? (Yes OR No)""")
         continue_to_ask_book_read = input()
         while continue_to_ask_book_read != "Yes" and continue_to_ask_book_read != "No" and continue_to_ask_book_read != "yes" and continue_to_ask_book_read != "no":
-            continue_to_ask_book_read = input(
-                """Do you still want to add another book to your "Have read" page ? (Yes OR No)""")
+            continue_to_ask_book_read = input("""Do you still want to add another book to your "Have read" page ? (Yes OR No)""")
     del list_of_booksread[:]
-
-
-def user_books_read_string(book_type):
-    if book_type == 1:
-        return 'Sci-fi'
-    elif book_type == 2:
-        return 'Biography'
-    elif book_type == 2:
-        return 'Horror'
-    elif book_type == 2:
-        return 'Romance'
-    elif book_type == 2:
-        return 'Fable'
-    elif book_type == 2:
-        return 'History'
-    else:
-        return 'Comedy'
 
 
 # for add book already read, must try and do that if he enters a number already, he can't enter again
@@ -149,8 +143,8 @@ def add_reader_profile():
     reader_age_category = user_age_category_number(reader_age)
     reader_book_style = ask_user_book_type()
     file_books_read.write(str(reader_pseudo) + ",")
+    file_books_read.write(str("\n"))
     bookread_reader_profile()
-    file_books_read.write("\n")
     readers_file_append.write(str(reader_pseudo) + str(",")+str(reader_gender) + str(","))
     readers_file_append.write(str(reader_age_category) + str(","))
     readers_file_append.write(str(reader_book_style) + str("\n"))
@@ -158,69 +152,102 @@ def add_reader_profile():
     file_books_read.close()
     readers_file_append.close()
 
-
 def delete_member():
     print("Which member do you want to delete?")
-    member_to_delete = input("Enter his pseudonym : ")
+    member_to_delete = input("Enter their pseudonym : ")
     readers_list = open("readers.txt", "r")
     booksread_list = open("booksread.txt", "r")
-    if (member_to_delete in readers_list) or (member_to_delete in booksread_list):
-        readers_lines = readers_list.readlines()
-        booksread_lines = booksread_list.readlines()
-        readers_list.close()
-        booksread_list.close()
-        new_readers_file = open("readers.txt", "w")
-        booksread_file = open("booksread.txt", "w")
-        for line in readers_lines:
-            if member_to_delete not in line:
-                new_readers_file.write(line)
-        for line2 in booksread_lines:
-            if member_to_delete not in line2:
-                booksread_file.write(line2)
-        booksread_file.close()
-        readers_list.close()
-    else:
-        print("The member that you searched doesn't exist in our database. \n")
+    readers_lines = readers_list.readlines()
+    booksread_lines = booksread_list.readlines()
+    found = False
+    for i in readers_lines :
+        readers_line = i.split(",")
+        if member_to_delete in readers_line :
+            found = True
+            readers_list = open("readers.txt","w")
+            booksread_list = open("booksread.txt","w")
+            for line in readers_lines :
+                if member_to_delete not in  line :
+                    readers_list.write(line)
+            for line2 in booksread_lines:
+                if member_to_delete not in line2:
+                    booksread_list.write(line2)
+            print("Member successfully deleted.")
+    if found == False :
+            print("Member not found in our database.")
+    readers_list.close()
+    booksread_list.close()
+
+
+def parse_user_info(txt_line):
+    infos = txt_line.split(DELIMITER)
+    for i in range(len(infos)):
+        if i != 0:
+            infos[i] = int(infos[i])
+
+    return infos
 
 
 def view_reader_profile():
-    print("Which member do you want to search for?")
-    reader_to_search = input("Enter his pseudonym : ")
+    with open("readers.txt", "r") as readers_list, open("booksread.txt","r") as booksread_list :
+        list_of_all_readers = tuple(map(parse_user_info, readers_list.readlines()))
+        list_of_all_booksreads_by_readers = tuple(map(parse_user_info, readers_list.readlines()))
+    found = False
+    user_query = str(input("Which member do you want to search for? Enter the pseudonym: "))
+    for user_info in list_of_all_readers:
+        if user_info[0] == user_query:
+            print(f"""\n{user_info[0]} has for gender: {READER_GENDERS[user_info[1]]}
+{user_info[0]} is in the following age range: {READER_AGES[user_info[2]]}
+{user_info[0]} likes the following type of book: {BOOK_GENRES[user_info[3]]}\n""")
+            #for i in
+            found = True
+            # break
+    if not found:
+        print("The member that you searched doesn't exist in our database.\n")
+
+
+def edit_reader_profile():
+    print("Which profile do you want to edit ?")
+    reader_to_search = input("Enter the pseudonym : ")
     readers_list = open("readers.txt", "r")
-    booksread_list = open("booksread.txt", "r")
+    #booksread_list = open("booksread.txt", "r")
     found = False
     list_of_all_readers = readers_list.readlines()
     for i in list_of_all_readers:
         reader_to_view = i.split(",")
         if reader_to_search in reader_to_view:
-            i = 1
-            print("\n", reader_to_search, "has for gender :", user_gender_string(reader_to_view[i]))
-            i = 2
-            print(reader_to_search, "is included in the following age range :",user_age_category_string(reader_to_view[i]))
-            i = 3
-            print(reader_to_search, "likes the following type of book :", user_book_type_string(reader_to_view[i]),"\n")
+            PARAMETER_TO_EDIT = FORBIDDEN_VALUE
+            while PARAMETER_TO_EDIT <= 0 or PARAMETER_TO_EDIT >= 8:
+                print("""Which parameter do you want to edit in that user's profile ? 
+                1. Pseudonym
+                2. Gender
+                3. Age
+                4. Book Type
+                5. Book Read """)
+                PARAMETER_TO_EDIT = int(input("Enter the corresponding number : "))
+                if PARAMETER_TO_EDIT == 1:
+                    pseudonym = ask_user_pseudonym()
+                    reader_to_view[0] = pseudonym
+                elif PARAMETER_TO_EDIT == 2:
+                    reader_gender = ask_user_gender()
+                    reader_to_view[1] = reader_gender
+                elif PARAMETER_TO_EDIT == 3:
+                    reader_age = ask_user_age()
+                    reader_age_category = user_age_category_number(reader_age)
+                    reader_to_view[2] = reader_age_category
+                elif PARAMETER_TO_EDIT == 4:
+                    reader_book_style = ask_user_book_type()
+                    reader_to_view[3] = reader_book_style
+                else:
+                    pass
+            print(f"""{reader_to_view[0]} has for gender: {READER_GENDERS[reader_to_view[1]]}
+                {reader_to_view[0]} is in the following age range: {READER_AGES[reader_to_view[2]]}
+                {reader_to_view[0]} likes the following type of book: {BOOK_GENRES[reader_to_view[3]]}"""
+                  )
             found = True
     if not found:
         print("The member that you searched doesn't exist in our database. \n")
     readers_list.close()
-
-def edit_reader_profile():
-    print("Which member do you want to search for?")
-    reader_to_search = input("Enter his pseudonym : ")
-    readers_list = open("readers.txt", "r")
-    booksread_list = open("booksread.txt", "r")
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # --------------------------------- LAUNCHING MENU FUNCTIONS -----------------------
@@ -258,7 +285,7 @@ def reader_profiles_menu():
     reader_profiles_menu_selection = input("Enter the corresponding choice : ")
     while reader_profiles_menu_selection != '1' and reader_profiles_menu_selection != '2' and reader_profiles_menu_selection != '3' and reader_profiles_menu_selection != '4' and reader_profiles_menu_selection != '5' and reader_profiles_menu_selection != '6':
         print("You selected a nonexistent choice, choose again please.")
-        reader_profiles_menu_selection = input("Enter the corresponding choice : ")
+        reader_profiles_menu_selection = input( "Enter the corresponding choice : ")
     reader_profiles_menu_selection = int(reader_profiles_menu_selection)
     print("\n")
 
@@ -274,6 +301,7 @@ def reader_profiles_menu():
         view_reader_profile()
         reader_profiles_menu()
     elif reader_profiles_menu_selection == 4:
+        edit_reader_profile()
         reader_profiles_menu()
     elif reader_profiles_menu_selection == 5:
         delete_member()
