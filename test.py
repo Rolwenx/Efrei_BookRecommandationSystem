@@ -123,3 +123,20 @@ def wiev_a_reader(reader_to_look_for,file_readers_read):
         if b[0]==reader_to_look_for:
             print('the reader has registered under the pseudonym ',b[0],', he is a ',gender_reader_inverse_function(b[1]),', ',age_reader_category_inverse_function(b[2]) 'and likes to read ',reading_style_reader_inverse_function(b[3]),' books')
 
+list_allowed = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r']
+list_ascii_char= ['s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S']
+list_ascii = ['T','U','V','W','X','Y','Z','!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ 	]]
+
+    def view_reader_profile():
+        with open("readers.txt", "r") as readers_list:
+            list_of_all_readers = tuple(map(parse_user_info, readers_list.readlines()))
+            found = False
+        user_query = str(input("Which member do you want to search for? Enter the pseudonym: "))
+        for user_info in list_of_all_readers:
+            if user_info[0] == user_query:
+                print(f"""\n{user_info[0]} has for gender: {READER_GENDERS[user_info[1]]}
+    {user_info[0]} is in the following age range: {READER_AGES[user_info[2]]}
+    {user_info[0]} likes the following type of book: {BOOK_GENRES[user_info[3]]}\n""")
+                found = True
+        if not found:
+            print("The member that you searched doesn't exist in our database.\n")

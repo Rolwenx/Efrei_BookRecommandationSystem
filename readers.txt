@@ -1,1 +1,5 @@
-Jade,Jade,
+Joseph,3,3,6
+Nolwen,2,1,7
+Lionel,1,1,5
+Ukra,3,2,6
+Emilienne,2,3,1
