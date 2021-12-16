@@ -24,8 +24,8 @@ def check_if_book_exist_then_returns_its_rank(book_to_search):
         list_of_all_books = remove_jump_of_line_in_list(list_of_all_books)
         for book in range(len(list_of_all_books)):
             if list_of_all_books[book] == book_to_search:
-                rank = book + 1
-                return True, rank
+                return book
+        return False
 
 
 # Global function that will check if a book exists in the books.txt file
@@ -96,21 +96,26 @@ def delete_book_in_depository():
             print("The selected book has been deleted.")
         # DELETE THE BOOK NUMBER FOR THE USER WHO READ THE DELETED BOOK
         books_read = open("booksread.txt", "r")
-        booksread_users = remove_jump_of_line_in_list(books_read.readlines())
+        booksread_users = books_read.readlines()
+        print(booksread_users)
         for i in range(len(booksread_users)):
             user = booksread_users[i].split(',')
             print(user)
-            for j in range(len(user)):
+            j = 0
+            while j <= len(user):
                 temp_number = str(temp_number)
-                print(temp_number)
-                print(user[j])
                 if user[j] == temp_number:
                     del user[j]
+                j = i+1
             user = ",".join(user)
             booksread_users[i] = user
+            print(booksread_users)
         books_read = open("booksread.txt", "w")
         for user in booksread_users:
             books_read.write(str(user) + str("\n"))
+        """books_read = open("booksread.txt", "w")
+        for user in booksread_users:
+            books_read.write(str(user) + str("\n"))"""
     else:
         print("This book is not in the depository. Can't delete a non-existent book.")
 

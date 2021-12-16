@@ -1,8 +1,9 @@
 from readers_functions import *
-from books_functions import *
 from recommandation_functions import *
 
-
+FORBIDDEN_VALUE = -1
+# List of the allowed values that the user is allowed to choose when entering his books read
+list_allowed_value = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',']
 
 READER_GENDERS = {
     1: "MAN",
@@ -25,18 +26,6 @@ BOOK_GENRES = {
     6: 'History',
     7: 'Comedy'
 }
-
-FORBIDDEN_VALUE = -1
-# List of the allowed values that the user is allowed to choose when entering his books read
-list_allowed_value = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',']
-
-
-# When doing the split, there's a \n that appears. This function will delete it
-def remove_jump_of_line_in_list(list):
-    for i in range(len(list)):
-        list[i] = list[i][:-1]
-    return list
-
 
 # Function that asks the user his pseudonym
 def ask_user_pseudonym():
@@ -89,6 +78,7 @@ def ask_user_book_type():
         7. Comedy""")
         book_type = int(input("Enter the corresponding number: "))
     return book_type
+
 
 def launching_menu():
     create_scoring_matrix()
