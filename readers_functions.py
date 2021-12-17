@@ -1,27 +1,51 @@
-import utilitary_functions as utils
+import utility_functions as utils
 from books_functions import *
 
+''' Function that will check if the string entered by the user is in the right format in the books read function : 
+number,number,number'''
 
-# Function that will check if the string entered by the user is in the right format in the books read function
-def check_if_string_is_good(string):
+
+def check_if_string_is_good(string, list):
     for character in string:
-        if character not in utils.list_allowed_value:
+        if character not in list:
             return False
     return True
 
 
-# Function that will ask the user to enter the books that he has read
+def check_if_rank_entered_exist_in_depository(books_read_list):
+    books_read_list = books_read_list.split(',')
+    books_file = open("books.txt", 'r')
+    books_list = books_file.readlines()
+    for character in books_read_list:
+        for i in range(len(books_list)):
+            temporary_i = str(i + 1)
+            character = character
+            if character != temporary_i :
+                del character
+    books_read_list = books_read_list.join(",")
+    for character in books_read_list:
+        if character == '0':
+            del character
+    books_read_list = ",".join(books_read_list)
+    return books_read_list
+
+
+# Function that will ask the user to enter the books that he has read and returns it as a string; ex : 15,2,23
 def book_read_reader_profile():
+    # List of the allowed values that the user is allowed to choose when entering his books read
+    list_allowed_value = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',']
     print("\n" + "Among the following books, which ones have you read ?")
     list_books()
     books_read_list = input("Enter the numbers corresponding to the books (separated by commas. Ex : 1,2,4)\n> ")
-    while not check_if_string_is_good(books_read_list):
+    while not check_if_string_is_good(books_read_list, list_allowed_value):
         print("You didn't respect the wanted format of answer or entered a letter.")
         books_read_list = input("Enter the numbers in the correct format (separated by commas. Ex : 1,2,4)\n> ")
-        check_if_string_is_good(books_read_list)
+        check_if_string_is_good(books_read_list, list_allowed_value)
+    check_if_rank_entered_exist_in_depository(books_read_list)
     return books_read_list
 
-# Global function that will check if a user exists in the readers.txt file
+
+# Global function that will check if a user exists in the readers.txt file and returns a boolean condition.
 def check_if_user_already_exist(pseudo):
     with open("readers.txt", "r") as readers_list_checkers:
         readers_in_list = readers_list_checkers.readlines()
@@ -31,7 +55,11 @@ def check_if_user_already_exist(pseudo):
                 return True
     return False
 
-# Function that will add a reader
+
+'''Function that regroups others functions that aims to ask the users about his personal information so that his profile 
+can be added in the database, therefore in the readers.txt'''
+
+
 def add_reader_profile():
     readers_file_append = open("readers.txt", "a")
     file_books_read = open("booksread.txt", "a")
@@ -79,8 +107,13 @@ def delete_member():
     books_read_list.close()
 
 
+"""Function that will allow the user to view the numbers in the readers.txt file as a string. The format will return
+items that are in different dictionaries initialized in the utility_functions file. We use the utils. since we 
+imported the functions in the utility_functions as utils."""
+
+
 def view_reader_profile():
-    with open("readers.txt", "r") as readers_list, open("booksread.txt","r") as booksread_list:
+    with open("readers.txt", "r") as readers_list, open("booksread.txt", "r") as booksread_list:
         list_of_all_readers = readers_list.readlines()
         list_of_booksread_lines = booksread_list.readlines()
         user_to_view = input("Which user do you want to view ?\n> ")
@@ -98,15 +131,15 @@ def view_reader_profile():
             for user_info_in_booksread in range(len(list_of_booksread_lines)):
                 user_info_split = list_of_booksread_lines[user_info_in_booksread].split(",")
                 if user_info_split[0] == user_to_view:
-                    for i  in range(1,len(user_info_split)):
+                    for i in range(1, len(user_info_split)):
                         books_list = open("books.txt", "r")
                         # We remove the \n in the list from the readlines() command
                         list_of_books = remove_jump_of_line_in_list(books_list.readlines())
                         # we initialized number_assigned_to_deleted_book to create the while loop
                         found_book, position_of_book = False, 0
                         while found_book == False and position_of_book < len(list_of_books):
-                            if int(user_info_split[i]) == position_of_book :
-                                print("- ",list_of_books[position_of_book])
+                            if int(user_info_split[i]) == position_of_book:
+                                print("- ", list_of_books[position_of_book])
                                 found_book = True
                             position_of_book += 1
         else:
@@ -115,7 +148,7 @@ def view_reader_profile():
 
 def edit_reader_profile():
     readers_list = open("readers.txt", "r")
-    booksread_list = open("booksread.txt","r")
+    booksread_list = open("booksread.txt", "r")
     list_of_all_readers = readers_list.readlines()
     list_of_booksread_users = booksread_list.readlines()
     user_to_edit = input("Which user profile do you want to edit ?\n> ")
@@ -162,24 +195,20 @@ def edit_reader_profile():
                     for user in range(len(list_of_booksread_users)):
                         user_info_split = list_of_booksread_users[user].split(",")
                         if user_info_split[0] == user_to_edit:
-                            element = str(user_to_edit) +str(",") + str(books_that_user_has_read) + str("\n")
+                            element = str(user_to_edit) + str(",") + str(books_that_user_has_read) + str("\n")
                             print(element)
                             list_of_booksread_users[user] = element
+                        readers_list.close()
+                        # We overwrite the whole file to enter new modified infos in booksread.txt and readers.txt
                     booksread_list = open("booksread.txt", "w")
                     booksread_list.close()
+                    # Adding all the rest of readers
                     booksread_list = open("booksread.txt", "a")
-                    joining_user_booskread = ",".join(user_info_split)
-                    readers_list.write(joining_user_booskread)
+                    for user in range(len(list_of_booksread_users)):
+                        booksread_list.write(list_of_booksread_users[user])
                     booksread_list.close()
-                readers_list.close()
-                # e overwrite the whole file to enter new modified infos in booksread.txt and readers.txt
-                readers_list = open("readers.txt", "w")
-                readers_list.close()
-            # Adding all the rest of readers
-            readers_list = open("readers.txt", "a")
-            joining_user = ",".join(user_info_split)
-            readers_list.write(joining_user)
-            readers_list.close()
+
+
     else:
         print("The member that you searched doesn't exist in our database.")
 
@@ -219,4 +248,4 @@ def reader_profiles_menu():
         print("\n \n")
         reader_profiles_menu()
     else:
-        launching_menu()
+        utils.launching_menu()

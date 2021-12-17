@@ -1,10 +1,14 @@
-# When doing the split, there's a \n that appears. This function will delete it
+# --------------------- MANAGING BOOK DEPOSITORY FUNCTIONS RELATED -----------------
+
+
+# When doing the split, there's a \n that appears. This function will delete it and return the list without it.
 def remove_jump_of_line_in_list(list):
     for i in range(len(list)):
         list[i] = list[i][:-1]
     return list
 
 
+# This function is going to display the books in the depository with a number attributed to it according to its position
 def list_books():
     """Prints the list of the books preceded by the sequential number"""
     books_list = open("books.txt", "r")
@@ -17,7 +21,10 @@ def list_books():
     return number_of_books
 
 
-# Global function that will check if a book exists in the books.txt file while returning its rank
+'''Global function that will check if a book exists in the books.txt file. If the book exist, it returns the book rank
+but if it doesn't exist, it returns false'''
+
+
 def check_if_book_exist_then_returns_its_rank(book_to_search):
     with open("books.txt", "r") as books_list:
         list_of_all_books = books_list.readlines()
@@ -28,7 +35,7 @@ def check_if_book_exist_then_returns_its_rank(book_to_search):
         return False
 
 
-# Global function that will check if a book exists in the books.txt file
+# Global function that will check if a book exists in the books.txt file and returns True.
 def check_if_book_exist(book_to_search):
     with open("books.txt", "r") as books_list:
         list_of_all_books = books_list.readlines()
@@ -36,6 +43,10 @@ def check_if_book_exist(book_to_search):
         for book in range(len(list_of_all_books)):
             if list_of_all_books[book] == book_to_search:
                 return True
+
+
+'''Global function that will add a book to the depository. It doesn't return anything but it adds the book name in the 
+books.txt file'''
 
 
 def add_book_to_depository():
@@ -49,9 +60,14 @@ def add_book_to_depository():
             books_list.write(str(book_to_add) + str("\n"))
 
 
+'''Global function that will edit a book to the depository. It doesn't return anything but it edit the book name in the 
+books.txt file'''
+
+
 def edit_book_in_depository():
     print("Which book do you want to edit ? (exact title please)")
     old_book_title = input("Enter the name of the book :\n> ")
+    # We check through the global function if the book exist or not.
     does_book_exist = check_if_book_exist(old_book_title)
     if does_book_exist:
         books_list = open("books.txt", "r")
@@ -59,8 +75,11 @@ def edit_book_in_depository():
         new_book_tile = input("Enter the new book name : ")
         for book in range(len(list_of_books)):
             if old_book_title == list_of_books[book]:
+                # we attribute the new book title to the old ONLY in the list : list_of_books
                 list_of_books[book] = new_book_tile
                 books_list.close()
+                # We overwrite the books.txt file and re-write it with the new book name that we changed in the
+                # list_of_books
                 with open("books.txt", "w") as books_list:
                     for books in list_of_books:
                         books_list.write(str(books) + str("\n"))
@@ -69,7 +88,11 @@ def edit_book_in_depository():
         print("This book is not in the depository. Can't edit a non-existent book.")
 
 
-#######################################
+''' Function that aims to first delete a book in the book depository (if it exists) and then delete the number
+associated to that book in the booksread.txt file. The function doesn't return anything but it does modify the books.txt
+and booksread.txt files.'''
+
+
 def delete_book_in_depository():
     print("Which book do you want to delete ? (exact title please)")
     book_title_to_delete = input("Enter the name of the book :\n> ")
@@ -84,8 +107,8 @@ def delete_book_in_depository():
         while found_book_to_delete == False and number_assigned_to_deleted_book < len(list_of_books):
             if book_title_to_delete == list_of_books[number_assigned_to_deleted_book]:
                 del list_of_books[number_assigned_to_deleted_book]
-                # we save the position of the deleted book from the list of books in a temp and we add one because
-                # a list start at 0 but in books.txt, the first book is at 1
+                '''we save the position of the deleted book from the list of books in a temp and we add one because
+                a list start at 0 but in books.txt, the first book is at 1'''
                 temp_number = number_assigned_to_deleted_book + 1
                 found_book_to_delete = True
             number_assigned_to_deleted_book += 1
@@ -97,29 +120,32 @@ def delete_book_in_depository():
         # DELETE THE BOOK NUMBER FOR THE USER WHO READ THE DELETED BOOK
         books_read = open("booksread.txt", "r")
         booksread_users = books_read.readlines()
-        print(booksread_users)
+        # Loop that removes the /n in the readlines list but it displays the list like so : ['item','','item2','',
+        # 'item3']
+        for i in range(len(booksread_users)):
+            booksread_users[i - 1] = booksread_users[i - 1][:-1]
+        # With this loop, it will remove the additional '' in the previous lists
+        for i in range(len(booksread_users)):
+            if booksread_users[i] == '':
+                del booksread_users[i]
         for i in range(len(booksread_users)):
             user = booksread_users[i].split(',')
-            print(user)
             j = 0
-            while j <= len(user):
+            while j < len(user):
                 temp_number = str(temp_number)
                 if user[j] == temp_number:
                     del user[j]
-                j = i+1
+                j = j + 1
             user = ",".join(user)
             booksread_users[i] = user
-            print(booksread_users)
         books_read = open("booksread.txt", "w")
         for user in booksread_users:
             books_read.write(str(user) + str("\n"))
-        """books_read = open("booksread.txt", "w")
-        for user in booksread_users:
-            books_read.write(str(user) + str("\n"))"""
     else:
         print("This book is not in the depository. Can't delete a non-existent book.")
 
 
+# Function that allows the user to browse the "Managing book depository" and apply its functionalities.
 def book_depository_menu():
     print("""You are currently are on the "Visit the Book Depository" page. What do you want to do ?
     1. Display books
