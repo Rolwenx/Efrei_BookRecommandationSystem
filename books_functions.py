@@ -1,5 +1,5 @@
 # --------------------- MANAGING BOOK DEPOSITORY FUNCTIONS RELATED -----------------
-
+import utility_functions as utility
 
 # When doing the split, there's a \n that appears. This function will delete it and return the list without it.
 def remove_jump_of_line_in_list(list):
@@ -28,7 +28,7 @@ but if it doesn't exist, it returns false'''
 def check_if_book_exist_then_returns_its_rank(book_to_search):
     with open("books.txt", "r") as books_list:
         list_of_all_books = books_list.readlines()
-        list_of_all_books = remove_jump_of_line_in_list(list_of_all_books)
+        list_of_all_books = utility.remove_gap(list_of_all_books)
         for book in range(len(list_of_all_books)):
             if list_of_all_books[book] == book_to_search:
                 return book
@@ -39,7 +39,7 @@ def check_if_book_exist_then_returns_its_rank(book_to_search):
 def check_if_book_exist(book_to_search):
     with open("books.txt", "r") as books_list:
         list_of_all_books = books_list.readlines()
-        list_of_all_books = remove_jump_of_line_in_list(list_of_all_books)
+        list_of_all_books = utility.remove_gap(list_of_all_books)
         for book in range(len(list_of_all_books)):
             if list_of_all_books[book] == book_to_search:
                 return True
@@ -58,6 +58,16 @@ def add_book_to_depository():
         else:
             print('This book is not in the depository. It\'s now added.')
             books_list.write(str(book_to_add) + str("\n"))
+            # We now add a column in the scoring matrix file for the rating system
+            with open("scoring_matrix.txt", "r") as scoring_matrix:
+                scoring_matrix_lines = utility.remove_gap(scoring_matrix.readlines())
+                scoring_matrix = open("scoring_matrix.txt", "w")
+            # We browse in the list containing the lines of the scoring matrix files. 1 line = 1 item of list
+            for row in scoring_matrix_lines :
+                # We add now add a 0 to each line, meaning that we add this book to all users of the database
+                row = row + str(" ")+str('0')
+                scoring_matrix.write(str(row)+str("\n"))
+            scoring_matrix.close()
 
 
 '''Global function that will edit a book to the depository. It doesn't return anything but it edit the book name in the 

@@ -50,6 +50,10 @@ def does_string_more_than_one_char(string):
         return True
     return False
 
+def remove_gap(list):
+    for i in range(len(list)):
+        list[-i] = list[-i][:-1]
+    return list
 
 def ask_user_gender():
     list_allowed_value = ['1', '2', '3']
