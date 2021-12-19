@@ -1,60 +1,62 @@
-'''---- BOOK RECOMMENDATION SYSTEM
-   ---- AUTHOR : Nolwen
-   ---- ROLE : Stores all the dictionaries; lists, functions that are mainly used in other files
-               It also stores the launching menu that allows the user to access all functionalities of the system.'''
-
-from readers_functions import *
-from recommandation_functions import *
-
-
-# Another list of allowed values but this times without the ',' for the add_reader_function where we only need number
-list_allowed_value2 = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-
-READER_GENDERS = {
-    1: "MAN",
-    2: "WOMAN",
-    3: "NO MATTER WHAT"
-}
-
-READER_AGES = {
-    1: "Less than 18 years old",
-    2: "Between 18 and 25 years old",
-    3: "More than 25 years old"
-}
-
-BOOK_GENRES = {
-    1: 'Sci-fi',
-    2: 'Biography',
-    3: 'Horror',
-    4: 'Romance',
-    5: 'Fable',
-    6: 'History',
-    7: 'Comedy'
-}
-
-''' Function that will check if the string entered by the user is in the right format in the books read function : 
-number,number,number'''
+'''
+---- BOOK RECOMMENDATION SYSTEM
+---- AUTHOR : Yoke NGASSA
+---- ROLE : Stores all the functions that are mainly used in other files
+            Also stores the launching menu that allows the user to access
+            all functionalities of the system.
+'''
 
 
-def check_if_string_is_good(string, list):
+def is_string_correct_format(string, list):
+    '''
+    Function that will check if the string entered by the user is in the right format
+    (with values included in the list).
+
+    PARAMETERS:
+        < string > (string): The string which Input should be in the good format.
+
+    RETURNS:
+        < condition > (boolean) : Returns True if the string is in the correct format.
+        Else false.
+    '''
     for character in string:
         if character not in list:
             return False
+
     return True
 
-'''function that ask the user his gender and will return an integer between 1 and 3 that correspond to
-the gender's number in the print'''
 
+def more_than_1_char(string):
+    '''
+    Function used for 1 character Inputs. It checks if the Input only has one character
 
-def does_string_more_than_one_char(string):
+    PARAMETERS:
+        < string > (string): The string which Input should only be one character
+
+    RETURNS:
+        < condition > (boolean) : Return True if string has more than one character.
+        Else return False
+    '''
     string = list(string)
     if len(string) > 1:
         return True
     return False
 
 
-# When doing the split, there's a \n that appears. This function will delete it and return the list without it.
-def remove_gap(list):
-    for i in range(len(list)):
-        list[-i] = list[-i][:-1]
-    return list
+def remove_gap(list_of_strings):
+    '''
+    When creating a list, sometimes a \n appears if the string converted into
+    a list had a jump of line. This function removes it.
+
+    PARAMETERS:
+        < list_of_strings > (list): The list with the \n at the end of some items
+
+    RETURNS:
+        < list_of_strings > (list): The list without the \n at the end of some items
+    '''
+
+    for i, string in enumerate(list_of_strings):
+        if string[-1] == "\n":
+            list_of_strings[i] = string[:-1]
+
+    return list_of_strings
