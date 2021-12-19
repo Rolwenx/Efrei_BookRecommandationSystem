@@ -68,7 +68,7 @@ def edit_book_in_depository():
         print("This book is not in the depository. Can't edit a non-existent book.")
     else:
         books_list = open("books.txt", "r")
-        list_of_books = remove_jump_of_line_in_list(books_list.readlines())
+        list_of_books = utility.remove_gap(books_list.readlines())
         new_book_tile = input("Enter the new book name : ")
         for book in range(len(list_of_books)):
             if old_book_title == list_of_books[book]:
@@ -156,5 +156,5 @@ def delete_book_in_depository():
                 del we_split_books_of_reader[does_book_exist]
                 scoring_matrix_rows[reader] = ' '.join(we_split_books_of_reader)
             # We write the new scoring matrix, without the line deleted in the scoring matrix file
-            recommendationfunctions.write_in_scoring_matrix(scoring_matrix_rows)
+            recommendationfunctions.Write_In_Scoring_Matrix(scoring_matrix_rows)
 

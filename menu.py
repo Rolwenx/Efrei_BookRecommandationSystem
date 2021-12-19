@@ -2,6 +2,7 @@
 from books_functions import *
 from readers_functions import *
 from recommandation_functions import *
+import time
 
 def reader_profiles_menu():
     print("""You are currently are on the "Reader Profiles" page. What do you want to do ?
@@ -18,7 +19,7 @@ def reader_profiles_menu():
     reader_profiles_menu_selection = int(reader_profiles_menu_selection)
     print("\n")
     if reader_profiles_menu_selection == 1:
-        list_books()
+        Display_List_Of_Book()
         print("\n \n")
         reader_profiles_menu()
     elif reader_profiles_menu_selection == 2:
@@ -55,7 +56,7 @@ def book_depository_menu():
     book_depository_menu_selection = int(book_depository_menu_selection)
     print("\n")
     if book_depository_menu_selection == 1:
-        list_books()
+        Display_List_Of_Book()
         print("\n \n")
         book_depository_menu()
     elif book_depository_menu_selection == 2:
@@ -85,7 +86,7 @@ def recommendation_menu():
     recommendation_menu_selection = int(recommendation_menu_selection)
     print("\n")
     if recommendation_menu_selection == 1:
-        rate_a_book()
+        Rate_A_Book()
     elif recommendation_menu_selection == 2:
         recommend_book()
     else:
@@ -115,7 +116,7 @@ it used as an introduction function that isn't supposed to be reused elsewhere.'
 def launching_menu():
     # before_launching_menu()
     # time.sleep(2)
-    create_scoring_matrix()
+    Create_Scoring_Matrix
     print("""\nWelcome to the program! Where would you like to go ?
     1. Reader Profiles
     2. Visit the book depository

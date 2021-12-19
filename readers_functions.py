@@ -207,7 +207,7 @@ RETURNS:
              < rank > (boolean) : False if the user doesn't exist in the readers.txt file'''
 
 
-def check_if_user_already_exist_and_returns_rank(pseudo):
+def Check_If_User_Exists_And_Return_Rank(pseudo):
     with open("readers.txt", "r", encoding="UTF-8") as readers_list_checkers:
         readers_in_list = utility.remove_gap(readers_list_checkers.readlines())
         for user in range(0,len(readers_in_list)):
@@ -241,7 +241,7 @@ def add_reader_profile():
     readers_file_append = open("readers.txt", "a", encoding="UTF-8")
     file_books_read = open("booksread.txt", "a", encoding="UTF-8")
     reader_pseudo = Input_Ask_Pseudonym()
-    does_reader_exist = check_if_user_already_exist_and_returns_rank(reader_pseudo)
+    does_reader_exist = Check_If_User_Exists_And_Return_Rank(reader_pseudo)
     if does_reader_exist == "don't exist":
         reader_gender = Input_Ask_Gender()
         reader_age = Input_Ask_Age()
@@ -292,7 +292,7 @@ def delete_member():
     readers_lines = readers_list.readlines()
     books_read_lines = books_read_list.readlines()
     # We store the
-    does_reader_exist = check_if_user_already_exist_and_returns_rank(member_to_delete)
+    does_reader_exist = Check_If_User_Exists_And_Return_Rank(member_to_delete)
     if not does_reader_exist:
         print("Member not found in our database.")
     else:
@@ -315,7 +315,7 @@ def delete_member():
             # line attributed to that rank, to delete the user in the scoring matrix file
             del scoring_matrix_rows[does_reader_exist]
             # We write the new scoring matrix, without the line deleted in the scoring matrix file
-            recommendationfunctions.write_in_scoring_matrix(scoring_matrix_rows)
+            recommendationfunctions.Write_In_Scoring_Matrix(scoring_matrix_rows)
     readers_list.close()
     books_read_list.close()
 
@@ -347,7 +347,7 @@ def view_reader_profile():
         list_of_all_readers = readers_list.readlines()
         list_of_booksread_lines = booksread_list.readlines()
         user_to_view = input("Which user do you want to view ?\n> ")
-        does_reader_exist = check_if_user_already_exist_and_returns_rank(user_to_view)
+        does_reader_exist = Check_If_User_Exists_And_Return_Rank(user_to_view)
         if does_reader_exist == "don't exist" :
             print("The member that you searched doesn't exist in our database.")
         else:
@@ -396,7 +396,7 @@ def edit_reader_profile():
     list_of_all_readers = readers_list.readlines()
     list_of_booksread_users = booksread_list.readlines()
     user_to_edit = input("Which user profile do you want to edit ?\n> ")
-    does_reader_exist = check_if_user_already_exist_and_returns_rank(user_to_edit)
+    does_reader_exist = Check_If_User_Exists_And_Return_Rank(user_to_edit)
     if not does_reader_exist:
         print("The member that you searched doesn't exist in our database.")
     else:
